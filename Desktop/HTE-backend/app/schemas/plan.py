@@ -6,6 +6,7 @@ class GoalContent(BaseModel):
     """Goal content structure"""
     duration: str = Field(..., description="Duration of the goal (e.g., '2 weeks', '3 months')")
     current_situation: str = Field(..., description="User's current situation")
+    task: str = Field(..., description="Specific task or objective related to the goal")
     attachment_id: Optional[str] = Field(None, description="Optional attachment ID")
 
 
