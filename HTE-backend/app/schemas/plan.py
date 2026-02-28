@@ -1,3 +1,5 @@
+import uuid
+
 from pydantic import BaseModel, Field
 from uuid import UUID
 from typing import Dict, Any, List, Optional
@@ -22,6 +24,6 @@ class TaskContent(BaseModel):
 
 class Plan(BaseModel):
     user_id: UUID = Field(..., description="User ID from Supabase SDK")
-    goal_id: UUID = Field(..., description="Goal ID generated on frontend")
+    goal_id: UUID = Field(default=uuid.uuid4, description="Goal ID generated on frontend")
     goal_content: GoalContent = Field(..., description="Goal details")
-    tasks_content: List[TaskContent] = Field(default=[], description="List of tasks, sorted by start_at")
+    tasks_content: Optional[List[TaskContent]] = Field(default=[], description="List of tasks, sorted by start_at")

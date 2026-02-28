@@ -1,5 +1,6 @@
 import json
 from typing import List
+import uuid
 from app.schemas.plan import Plan, TaskContent
 from app.services.llm_service import minimax_client
 from app.services.prompts import build_plan_generation_prompt, SYSTEM_PROMPT_PLANNER
@@ -53,11 +54,12 @@ async def plan(plan: Plan) -> Plan:
         
         tasks_data = json.loads(json_str)
         print(f"[PLAN SERVICE] JSON parsed successfully, found {len(tasks_data)} tasks")
-        
+        print(f"[PLAN SERVICE] Sample task data: {tasks_data}")
         # Convert each task dict to TaskContent object
         task_objects: List[TaskContent] = []
         for i, task_dict in enumerate(tasks_data, 1):
             task_content = TaskContent(**task_dict)
+            task_content.task_id = uuid.uuid4()  # Generate unique task_id
             task_objects.append(task_content)
             print(f"[PLAN SERVICE] Task {i}/{len(tasks_data)}: {task_content.title}")
         
